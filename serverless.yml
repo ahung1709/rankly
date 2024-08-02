@@ -1,0 +1,21 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: ahorg
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: rankly
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: rankly-lamda
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+  stage: dev
+
+functions:
+  rank:
+    handler: handler.rank
+    events:
+      - http:
+          path: rank
+          method: get
+      # - httpApi: 'GET /rank'
