@@ -1,7 +1,4 @@
-
-const emojis = [
-  '😁', '😃', '😀', '😊', '😉', '😍', '🔶', '🔷', '🚀'
-];
+const emojis = ['😁', '😃', '😀', '😊', '😉', '😍', '🔶', '🔷', '🚀'];
 
 exports.rank = async (event) => {
   const rank = event.queryStringParameters.rank;
@@ -9,12 +6,11 @@ exports.rank = async (event) => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*'
-    }, 
+      'Access-Control-Allow-Origin': '*',
+    },
     body: JSON.stringify({
-      message: 'Go Serverless v4.0! Your function executed successfully!', 
-      input: rankEmoji, 
-      // input: event, 
-    })
+      message: 'Go Serverless v4.0! Your function executed successfully!',
+      input: rankEmoji,
+    }),
   };
 };

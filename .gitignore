@@ -1,2 +1,6 @@
+# dependencies
 node_modules
 .serverless
+
+# misc
+.DS_Store

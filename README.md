@@ -1,68 +1,117 @@
-<!--
-title: 'AWS NodeJS Example'
-description: 'This template demonstrates how to deploy a simple NodeJS function running on AWS Lambda using the Serverless Framework.'
-layout: Doc
-framework: v4
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, Inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Face Recognition Brain – Rank Badge Serverless AWS Lambda
 
-# Serverless Framework AWS NodeJS Example
+This repository contains a lightweight **serverless function** that converts a user’s face-detection entry count into a **visual rank badge (emoji)**.
 
-This template demonstrates how to deploy a simple NodeJS function running on AWS Lambda using the Serverless Framework. The deployed function does not include any event definitions or any kind of persistence (database). For more advanced configurations check out the [examples repo](https://github.com/serverless/examples/) which include use cases like API endpoints, workers triggered by SQS, persistence with DynamoDB, and scheduled tasks. For details about configuration of specific events, please refer to our [documentation](https://www.serverless.com/framework/docs/providers/aws/events/).
+This service is deployed on **AWS Lambda using the Serverless Framework** and is **invoked directly by the frontend**, demonstrating a scalable and decoupled architecture.
 
-## Usage
+---
 
-### Deployment
+## 🧩 Related Repositories
 
-In order to deploy the example, you need to run the following command:
+- 🔗 **Frontend:** https://github.com/ahung1709/facerecognitionbrain
+
+  User authentication, image submission, and UI rendering
+
+- 🔗 **Backend API:** https://github.com/ahung1709/facerecognitionbrain-api
+
+  JWT auth, Redis sessions, PostgreSQL persistence, Clarifai API integration
+
+---
+
+## 🛠 Tech Stack
+
+- AWS Lambda
+- Serverless Framework
+- Node.js
+- JavaScript
+
+---
+
+## 🚀 Live Role in the System
+
+- Called **directly by the React frontend**
+- Returns a rank emoji based on entry count
+- Reduces backend workload
+- Demonstrates **serverless-first design**
+
+---
+
+## 🧠 Function Overview
+
+**Function Name:** `rank`
+
+**Responsibility:**
+
+- Accept a numeric `rank` (entry count) via query string
+- Map the rank value to a corresponding emoji badge
+- Safely cap values safely to prevent out-of-range access
+- Return a JSON response with the selected emoji
+
+---
+
+## 🔌 API Contract
+
+### Endpoint
+
+```http
+GET /rank?rank=<number>
 
 ```
-serverless deploy
+
+### Example Request
+
+```http
+GET https://<lambda-url>/rank?rank=5
 ```
 
-After running deploy, you should see output similar to:
-
-```
-Deploying "aws-node" to stage "dev" (us-east-1)
-
-✔ Service deployed to stack aws-node-dev (90s)
-
-functions:
-  hello: aws-node-dev-hello (1.5 kB)
-```
-
-### Invocation
-
-After successful deployment, you can invoke the deployed function by using the following command:
-
-```
-serverless invoke --function hello
-```
-
-Which should result in response similar to the following:
+### Example Response
 
 ```json
 {
-  "statusCode": 200,
-  "body": "{\"message\":\"Go Serverless v4.0! Your function executed successfully!\"}"
+  "message": "Go Serverless v4.0! Your function executed successfully!",
+  "input": "😍"
 }
 ```
 
-### Local development
+Note: The input field represent the computed rank badge emoji
 
-The easiest way to develop and test your function is to use the Serverless Framework's `dev` command:
+### HTTP Status Codes
 
+- 200 OK - successful execution
+
+---
+
+## ⚙️ Local Development
+
+### Install dependencies
+
+```bash
+npm install
 ```
-serverless dev
+
+### Invoke locally
+
+```bash
+serverless invoke local \
+  --function rank \
+  --data '{"queryStringParameters":{"rank":3}}'
 ```
 
-This will start a local emulator of AWS Lambda and tunnel your requests to and from AWS Lambda, allowing you to interact with your function as if it were running in the cloud.
+---
 
-Now you can invoke the function as before, but this time the function will be executed locally. Now you can develop your function locally, invoke it, and see the results immediately without having to re-deploy.
+## 🚀 Deployment
 
-When you are done developing, don't forget to run `serverless deploy` to deploy the function to the cloud.
+```bash
+serverless deploy
+```
+
+---
+
+## 🧠 Design Rationale
+
+This Lambda function is intentionally isolated to:
+
+- Demonstrate serverless architecture patterns
+- Reduce backend responsibilities
+- Improve scalability and fault isolation
+- Showcase real-world cloud integration
